@@ -7,9 +7,9 @@ import androidx.room.Query;
 
 @Dao
 public interface WordsDao {
-    @Query("SELECT * FROM words")
-    suspend fun getAllWords() : List<WordsModel>
+    @Query("SELECT * FROM ITEMS")
+    suspend fun getAllWords() : List<Words>
 
     @Insert
-    suspend fun insert(vararg wordsModel: WordsModel)
+    suspend fun insert(vararg wordsModel: Words)
 }
