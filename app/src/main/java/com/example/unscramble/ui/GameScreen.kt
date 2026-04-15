@@ -127,6 +127,13 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel()) {
                 onPlayAgain = { gameViewModel.resetGame() }
             )
         }
+        AddWordsScreen(
+            userInput = gameViewModel.userInput,
+            isInputEmpty = gameUiState.isInputEmpty,
+            onUserInputChanged = { gameViewModel.updateUserInput(it) },
+            onKeyboardDone = { gameViewModel.insertData(gameViewModel.userInput) },
+            gameViewModel = gameViewModel,
+        )
     }
 }
 
@@ -251,10 +258,83 @@ private fun FinalScoreDialog(
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GameScreenPreview() {
-    UnscrambleTheme {
-        GameScreen()
+fun AddWordsScreen(
+    userInput: String,
+    isInputEmpty: Boolean,
+    onKeyboardDone: () -> Unit,
+    onUserInputChanged: (String) -> Unit,
+    gameViewModel : GameViewModel,
+    modifier: Modifier = Modifier) {
+    val mediumPadding = dimensionResource(R.dimen.padding_medium)
+
+    Card(
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(mediumPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(mediumPadding)
+        ) {
+            Text(
+                text = "Tambah kata",
+                style = typography.displayMedium
+            )
+            OutlinedTextField(
+                value = userInput,
+                singleLine = true,
+                shape = shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = colorScheme.surface,
+                    unfocusedContainerColor = colorScheme.surface,
+                    disabledContainerColor = colorScheme.surface,
+                ),
+                onValueChange = onUserInputChanged,
+                isError = isInputEmpty,
+                label = {
+                    if (isInputEmpty) {
+                        Text("Harap inputan di isi")
+                    } else {
+                        Text("Masukkan kata")
+                    }
+                },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { onKeyboardDone() }
+                )
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(mediumPadding),
+            verticalArrangement = Arrangement.spacedBy(mediumPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { gameViewModel.insertData(userInput) }
+            ) {
+                Text(
+                    text = stringResource(R.string.submit),
+                    fontSize = 16.sp
+                )
+            }
+
+        }
     }
 }
+
+
+//@Preview(showBackground = true)
+//@Composable
+//fun GameScreenPreview() {
+//    UnscrambleTheme {
+//        GameScreen()
+//    }
+//}

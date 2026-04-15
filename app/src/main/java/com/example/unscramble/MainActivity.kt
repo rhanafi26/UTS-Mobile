@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     GameScreen()
-                    AddWords()
                 }
             }
         }
