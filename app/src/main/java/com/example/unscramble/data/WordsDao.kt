@@ -8,8 +8,8 @@ import androidx.room.Query
 interface WordsDao {
 
     @Query("SELECT * FROM items")
-    suspend fun getAllWords() : List<WordsModel>
+    suspend fun getAllWords() : List<Words>
 
     @Insert
-    suspend fun insert(vararg wordsModel: WordsModel)
+    suspend fun insert(vararg wordsModel: Words)
 }

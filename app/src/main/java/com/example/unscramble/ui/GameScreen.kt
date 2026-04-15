@@ -127,6 +127,7 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel()) {
                 onPlayAgain = { gameViewModel.resetGame() }
             )
         }
+
         AddWordsScreen(
             userInput = gameViewModel.userInput,
             isInputEmpty = gameUiState.isInputEmpty,
