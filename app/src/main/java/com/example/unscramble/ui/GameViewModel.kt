@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.unscramble.data.MAX_NO_OF_WORDS
 import com.example.unscramble.data.SCORE_INCREASE
+import com.example.unscramble.data.Words
 import com.example.unscramble.data.WordsDao
 import com.example.unscramble.data.allWords
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -151,7 +152,7 @@ class GameViewModel(val dao: WordsDao): ViewModel() {
     fun insertData(wordsInput: String){
         if (wordsInput.isNotEmpty()){
 
-            val wordsTemp = WordsModel(word= wordsInput)
+            val wordsTemp = Words(word= wordsInput)
 
             viewModelScope.launch {
                 dao.insert(wordsTemp)
